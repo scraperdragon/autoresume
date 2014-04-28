@@ -24,3 +24,15 @@ def test_reset_state():
     assert unnamed.state == 'potato'
     unnamed.reset()
     assert unnamed.state == None, unnamed.state
+
+def test_raw_iterating():
+    resumer = autoresume.AutoResume('raw_iter')
+    resumer.reset()
+    assert list(x for x in resumer.iter(range(5))) == [0, 1, 2, 3, 4]
+    assert list(x for x in resumer.iter(range(10))) == [5, 6, 7, 8, 9]
+
+def test_iterating():
+    resumer = autoresume.AutoResume('iter')
+    resumer.reset()
+    assert list(x for x in resumer.magic(range(5), "x{}x")) == ['x0x', 'x1x', 'x2x', 'x3x', 'x4x']
+    assert list(x for x in resumer.magic(range(10), "y{}y")) == ['y5y', 'y6y', 'y7y', 'y8y', 'y9y']

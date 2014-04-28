@@ -1,0 +1,2 @@
+class AutoResume(object):
+    pass

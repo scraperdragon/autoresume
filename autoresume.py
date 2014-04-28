@@ -6,6 +6,9 @@ class AutoResume(object):
     def save_state(self, value):
         self.backend.save(self.name, value)
 
+    def reset(self):
+        self.backend.save(self.name, None)
+
     @property
     def state(self):
         return self.backend.state(self.name)
@@ -14,7 +17,12 @@ class AutoResume(object):
 class ScraperwikiBackend(object):
     def save(self, name, value):
         import scraperwiki
-        scraperwiki.sql.save_var(name, value)
+        if value is None:
+            # TODO fix in dumptruck
+            scraperwiki.sql.execute("delete from swvariables where name=?", name)
+            scraperwiki.sql.commit()
+        else:
+            scraperwiki.sql.save_var(name, value)
 
     def state(self, name):
         import scraperwiki

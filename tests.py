@@ -14,3 +14,13 @@ def test_saves_to_db():
     named.save_state(5)
     assert unnamed.state == 4
     assert named.state == 5
+
+def test_state_defaults_to_none():
+    assert autoresume.AutoResume(name="not_a_name").state == None
+
+def test_reset_state():
+    unnamed = autoresume.AutoResume()
+    unnamed.save_state('potato')
+    assert unnamed.state == 'potato'
+    unnamed.reset()
+    assert unnamed.state == None, unnamed.state

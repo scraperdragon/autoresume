@@ -1,2 +1,3 @@
 class AutoResume(object):
-    pass
+    def __init__(self, name='page'):
+        self.name = name

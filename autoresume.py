@@ -21,6 +21,7 @@ class AutoResume(object):
         return self.backend.state(self.name)
 
     def iter(self, iterator):
+        prev_item = None
         sentinel = self.state
         found_sentinel = sentinel is None
         yielded = False
@@ -30,8 +31,14 @@ class AutoResume(object):
                 continue
             if found_sentinel:
                 yielded = True
-                yield item
-                self.save_state(item)  # TODO: don't save every time
+                try:
+                    yield item
+                except:
+                    if prev_item:
+                        self.save_state(prev_item)  # TODO: don't save every time
+                    raise
+                prev_item = item
+        self.save_state(item)
         if not yielded and not found_sentinel:
             raise NoSentinelError(sentinel)
 

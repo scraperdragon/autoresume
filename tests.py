@@ -44,3 +44,16 @@ def test_save_if_stopped():
         if x==5:
             break
     assert list(resumer.iter(range(10))) == [5, 6, 7, 8, 9]
+
+
+def test_save_if_stopped():
+    resumer = autoresume.AutoResume('stopped')
+    resumer.reset()
+
+    try:
+        for x in resumer.iter(range(10)):
+            if x==5:
+                raise IndexError
+    except Exception:
+        pass
+    assert list(resumer.iter(range(10))) == [5, 6, 7, 8, 9]

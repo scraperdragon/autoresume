@@ -1,9 +1,14 @@
+import scraperwiki
+
+
 class AutoResumeError(Exception):
     pass
+
 
 class NoSentinelError(AutoResumeError):
     """The saved value was not found in the iterator."""
     pass
+
 
 class AutoResume(object):
     def __init__(self, name='page'):
@@ -32,7 +37,7 @@ class AutoResume(object):
                     yield item
                 except:
                     if prev_item:
-                        self.save_state(prev_item)  # TODO: don't save every time
+                        self.save_state(prev_item)
                     raise
                 prev_item = item
             elif item == sentinel:
@@ -46,9 +51,9 @@ class AutoResume(object):
         for item in self.iter(iterator):
             yield template.format(item)
 
+
 class ScraperwikiBackend(object):
     def save(self, name, value):
-        import scraperwiki
         if value is None:
             # TODO fix in dumptruck
             scraperwiki.sql.execute("delete from swvariables where name=?", name)
@@ -57,5 +62,4 @@ class ScraperwikiBackend(object):
             scraperwiki.sql.save_var(name, value)
 
     def state(self, name):
-        import scraperwiki
         return scraperwiki.sql.get_var(name)

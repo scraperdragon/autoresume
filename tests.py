@@ -36,3 +36,11 @@ def test_iterating():
     resumer.reset()
     assert list(x for x in resumer.magic(range(5), "x{}x")) == ['x0x', 'x1x', 'x2x', 'x3x', 'x4x']
     assert list(x for x in resumer.magic(range(10), "y{}y")) == ['y5y', 'y6y', 'y7y', 'y8y', 'y9y']
+
+def test_save_if_stopped():
+    resumer = autoresume.AutoResume('stopped')
+    resumer.reset()
+    for x in resumer.iter(range(10)):
+        if x==5:
+            break
+    assert list(resumer.iter(range(10))) == [5, 6, 7, 8, 9]

@@ -12,9 +12,9 @@ class NoSentinelError(AutoResumeError):
 
 
 class AutoResume(object):
-    def __init__(self, name='page'):
+    def __init__(self, name='page', backend=None):
         self.name = name
-        self.backend = ScraperwikiBackend()
+        self.backend = backend or ScraperwikiBackend()
 
     def save_state(self, value):
         "We record that we have completed 'value'"

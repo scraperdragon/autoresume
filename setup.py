@@ -4,4 +4,3 @@ from distutils.core import setup
 
 setup(name="autoresume",
       packages=["autoresume"])
-~

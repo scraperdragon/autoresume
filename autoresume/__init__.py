@@ -30,9 +30,9 @@ class AutoResume(object):
         return self.backend.state(self.name)
 
     def iter(self, iterator):
-        "We assume the iterator is unchanged except
-         for appending: i.e. order is unchanged and
-         old value must be present."
+        """We assume the iterator is unchanged except
+           for appending: i.e. order is unchanged and
+           old value must be present."""
         prev_item = None
         sentinel = self.state
         found_sentinel = sentinel is None
